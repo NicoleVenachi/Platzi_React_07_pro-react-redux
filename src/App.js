@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 
+import {connect} from 'react-redux'
+
+
+import { setPokemons as setPokemonsActions } from './actions';
+
+
 import { Col } from 'antd';
 
 import Searcher from './components/Searcher';
@@ -10,15 +16,14 @@ import './styles/App.css';
 import { getPokemon } from './api';
 
 
-function App() {
-
-  const [pokemons, setPokemons] = useState([]);
-
-  //efect para hacer peticion de data
+function App({pokemons, setPokemons}) {
+  //efect para hacer peticion de data, la mando al estado general.
+  //la primera vez hace llamado a la API.
+  
   React.useEffect(()=>{
     const fetchPokemon = async () =>{
       const pokemonsRes = await getPokemon();
-      //console.log(pokemonsRes);
+      console.log(pokemonsRes);
       setPokemons(pokemonsRes)
     } 
 
@@ -40,4 +45,14 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  pokemons: state.pokemons,
+})
+
+const mapDispathToProps = (dispatch) => ({
+  setPokemons: (value) => dispatch(setPokemonsActions(value))
+})
+
+
+
+export default connect(mapStateToProps, mapDispathToProps)(App);

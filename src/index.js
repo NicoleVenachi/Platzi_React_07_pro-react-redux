@@ -3,12 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import App from './App';
 
+import { pokemonsReducer } from './reducers/pokemons';
+import { Provider } from 'react-redux';
+import { legacy_createStore as createStore } from 'redux';
+
 import 'antd/dist/reset.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const store =createStore(pokemonsReducer)
+
 root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>  
   
-  <App />
   
 );
 
