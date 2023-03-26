@@ -5,13 +5,15 @@ import App from './App';
 
 import { pokemonsReducer } from './reducers/pokemons';
 import { Provider } from 'react-redux';
-import { legacy_createStore as createStore } from 'redux';
+import { legacy_createStore as createStore, compose } from 'redux';
 
 import 'antd/dist/reset.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const store =createStore(pokemonsReducer)
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() || compose
+
+const store =createStore(pokemonsReducer, composeEnhancer)
 
 root.render(
   <Provider store={store}>
