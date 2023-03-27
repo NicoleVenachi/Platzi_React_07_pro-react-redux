@@ -5,11 +5,11 @@ import Meta from "antd/lib/card/Meta";
 import { StarOutlined } from '@ant-design/icons'
 
 
-function PokemonCard({ name }) {
+function PokemonCard({ name, image }) {
   return (
     <Card
       title={name}
-      cover={<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png" alt="Psyduck" />}
+      cover={<img src={image} alt={name} />}
       extra={<StarOutlined />}
     >
       {/* Meta, para meter ell tipo en la parte de abajo */}

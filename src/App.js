@@ -10,7 +10,7 @@ import PokemonList from './components/PokemonList';
 
 import logo from './statics/logo.svg'
 import './styles/App.css';
-import { getPokemon } from './api';
+import { getPokemon, getPokemonDetails } from './api';
 
 
 function App() {
@@ -27,8 +27,14 @@ function App() {
   React.useEffect(()=>{
     const fetchPokemon = async () =>{
       const pokemonsRes = await getPokemon();
-      console.log(pokemonsRes);
-      dispatch(setPokemons(pokemonsRes))
+      //lanza varias peticiones al mismo tiempo
+      //se espera hasta que todas sean resueltas
+      const pokemonsDetails = await Promise.all(
+        pokemonsRes.map((pokemon) =>getPokemonDetails(pokemon))  
+      );
+
+      console.log(pokemonsDetails);
+      dispatch(setPokemons(pokemonsDetails))
     } 
 
     fetchPokemon()
