@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { setPokemons} from './actions';
+import {getPokemonWithDetails} from './actions';
 import {useSelector, useDispatch} from 'react-redux'
 
 import { Col } from 'antd';
@@ -10,7 +10,7 @@ import PokemonList from './components/PokemonList';
 
 import logo from './statics/logo.svg'
 import './styles/App.css';
-import { getPokemon, getPokemonDetails } from './api';
+import { getPokemon } from './api';
 
 
 function App() {
@@ -26,15 +26,12 @@ function App() {
 
   React.useEffect(()=>{
     const fetchPokemon = async () =>{
+      
+      //pido todos los datos
       const pokemonsRes = await getPokemon();
-      //lanza varias peticiones al mismo tiempo
-      //se espera hasta que todas sean resueltas
-      const pokemonsDetails = await Promise.all(
-        pokemonsRes.map((pokemon) =>getPokemonDetails(pokemon))  
-      );
-
-      console.log(pokemonsDetails);
-      dispatch(setPokemons(pokemonsDetails))
+      
+      //Lanzo todas las petciones, y le paso los pokemons totales
+      dispatch(getPokemonWithDetails(pokemonsRes))
     } 
 
     fetchPokemon()
