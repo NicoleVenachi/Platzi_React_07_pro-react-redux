@@ -15,7 +15,7 @@ import 'antd/dist/reset.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION__ || compose;
+const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const composeEnhancer = composeAlt(applyMiddleware(thunk, logger, featuring))
 

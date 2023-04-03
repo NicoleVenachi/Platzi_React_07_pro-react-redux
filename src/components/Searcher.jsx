@@ -6,6 +6,7 @@ function Searcher() {
   return (
     <Input.Search
       placeholder='Search ...'
+      style={{ marginBottom: 10 }}
     />
   )
 }
