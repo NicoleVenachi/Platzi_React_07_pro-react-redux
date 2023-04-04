@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {getPokemonWithDetails, setLoading} from './actions';
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector, useDispatch, shallowEqual} from 'react-redux'
 
 import { Col, Spin } from 'antd';
 
@@ -16,10 +16,12 @@ import { getPokemon } from './api';
 function App() {
 
   //hooks de redux
-  const pokemons = useSelector(state=> state.pokemons)
+  const pokemons = useSelector( state => 
+    state.getIn(['data', 'pokemons'], shallowEqual) 
+  ).toJS()
   const dispatch = useDispatch();
 
-  const loading = useSelector(state => state.loading)
+  const loading = useSelector(state => state.getIn(['ui', 'loading']))
   //efect para hacer peticion de data, la mando al estado general.
   //la primera vez hace llamado a la API.
 
