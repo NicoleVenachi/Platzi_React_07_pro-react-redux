@@ -1,6 +1,5 @@
 import React from 'react'
 
-import {getPokemonWithDetails, setLoading} from './actions';
 import {useSelector, useDispatch, shallowEqual} from 'react-redux'
 
 import { Col, Spin } from 'antd';
@@ -10,35 +9,27 @@ import PokemonList from './components/PokemonList';
 
 import logo from './statics/logo.svg'
 import './styles/App.css';
-import { getPokemon } from './api';
+
+import { fetchPokemonWithDetails } from './slices/data';
 
 
 function App() {
 
   //hooks de redux
   const pokemons = useSelector( state => 
-    state.getIn(['data', 'pokemons'], shallowEqual) 
-  ).toJS()
+    state.data.pokemons, shallowEqual
+  )
   const dispatch = useDispatch();
 
-  const loading = useSelector(state => state.getIn(['ui', 'loading']))
+  const loading = useSelector(state => state.ui.loading)
+  
   //efect para hacer peticion de data, la mando al estado general.
   //la primera vez hace llamado a la API.
 
 
   React.useEffect(()=>{
-    const fetchPokemon = async () =>{
-      dispatch(setLoading(true))
-      //pido todos los datos
-      const pokemonsRes = await getPokemon();
-      
-      //Lanzo todas las petciones, y le paso los pokemons totales
-      dispatch(getPokemonWithDetails(pokemonsRes))
-
-      dispatch(setLoading(false))
-    } 
-
-    fetchPokemon()
+    console.log(pokemons);
+    dispatch((fetchPokemonWithDetails()))
   },[])
 
   return (
